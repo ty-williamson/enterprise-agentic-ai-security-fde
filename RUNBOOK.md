@@ -4,7 +4,7 @@ This runbook documents every terminal command required to provision the WSL/Linu
 
 ---
 
-## 1. Future Quick-Boot Checklist (How to Boot This Project Up)
+## Future Quick-Boot Checklist (How to Boot This Project Up)
 
 If the environment is already installed and you are returning to this project later, you only need **3 commands** in your (WSL/Linux) terminal:
 
