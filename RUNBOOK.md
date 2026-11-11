@@ -32,7 +32,7 @@ sudo apt update && sudo apt install -y python3-venv python3-pip
 
 ```
 
-Why: Refreshes Ubuntu's APT package index and installs `python3-venv` (required to create isolated Python environments) and `python3-pip`(Python's package manager).
+**Why**: Refreshes Ubuntu's APT package index and installs `python3-venv` (required to create isolated Python environments) and `python3-pip`(Python's package manager).
 
 ---
 
@@ -46,7 +46,7 @@ source .venv/bin/activate
 
 ```
 
-Purpose and function:
+**Purpose and function**:
 
 `deactivate 2>/dev/null || true` & `rm -rf .venv`: Safely exits any broken virtual environment and deletes incomplete `.venv` folders if a prior install was interrupted.
 
@@ -65,8 +65,8 @@ python -m pip install numpy pydantic
 
 ```
 
-Why: `python -m pi`p instead of bare `pip`: Guarantees that packages are installed into the currently active `.venv` Python interpreter rather than falling back to a global system path.
+**Why**: `python -m pi`p instead of bare `pip`: Guarantees that packages are installed into the currently active `.venv` Python interpreter rather than falling back to a global system path.
 
-Why: `--index-url https://download.pytorch.org/whl/cpu`: Standard `pip install torch` downloads ~2.5 GB of NVIDIA CUDA GPU libraries. Using the /`whl/cpu` index downloads the lightweight (~180 MB) CPU-optimized build of PyTorch, which installs in seconds and runs cleanly on standard laptop CPUs.
+**Why**: `--index-url https://download.pytorch.org/whl/cpu`: Standard `pip install torch` downloads ~2.5 GB of NVIDIA CUDA GPU libraries. Using the /`whl/cpu` index downloads the lightweight (~180 MB) CPU-optimized build of PyTorch, which installs in seconds and runs cleanly on standard laptop CPUs.
 
 ## Pipeline #1: Multi-Agent RAG Guardrail & 10-Stage Security Audit
