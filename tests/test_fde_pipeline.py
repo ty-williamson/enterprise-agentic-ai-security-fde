@@ -1,6 +1,6 @@
 """
 Google-Grade Automated Unit & Integration Test Suite
-Author: Ty Williamson (2026 NSF AI-EDGE Institute / Ohio University)
+Author: Ty Williamson (2026 NSF AI-EDGE Institute / Ohio State University)
 
 Verifies:
 1. Hybrid Vector RAG structured metadata filtering and semantic cosine retrieval.
