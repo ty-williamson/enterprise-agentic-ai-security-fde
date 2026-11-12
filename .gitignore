@@ -226,3 +226,4 @@ data/
 .venv/
 __pycache__/
 data/
+traces.json

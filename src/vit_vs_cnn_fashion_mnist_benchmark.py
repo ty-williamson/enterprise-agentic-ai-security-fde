@@ -3,10 +3,8 @@ Vision Transformer (ViT) vs. Convolutional Neural Network (CNN) Benchmark on Fas
 Author: Ty Williamson (2026 NSF AI-EDGE Institute — Practical Transformer Architectures)
 
 Implements:
-1. Patch Embedding: Splits 28x28 images into 4x4 patches (L=49), prepends learnable [CLS] token (L+1=50),
-   and adds learnable Positional Encoding.
-2. Transformer Encoder Block: Pre-LayerNorm -> Multi-Head Self-Attention (Q, K, V) -> Residual (+) ->
-   LayerNorm -> FFN (Dense1 -> GELU -> Dense2 -> Dropout) -> Residual (+).
+1. Patch Embedding: Splits 28x28 images into 4x4 patches (L=49), prepends learnable [CLS] token (L+1=50), and adds learnable Positional Encoding.
+2. Transformer Encoder Block: Pre-LayerNorm -> Multi-Head Self-Attention (Q, K, V) -> Residual (+) -> LayerNorm -> FFN (Dense1 -> GELU -> Dense2 -> Dropout) -> Residual (+).
 3. Baseline CNN: 2D Convolutional feature extraction + MaxPool2d dimensionality reduction + MLP Classifier.
 4. Comparative Evaluation Pipeline logging Epoch Latency, Training Loss, and Test Accuracy.
 """

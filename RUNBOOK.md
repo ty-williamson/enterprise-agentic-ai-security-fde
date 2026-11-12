@@ -13,7 +13,7 @@ Once your virtual environment (`.venv`) is already installed, booting this proje
 
 ```bash
 # 1. Navigate into the project directory
-cd ~/personal/nsf_ai-edge_institute/enterprise-agentic-ai-security-fde
+cd enterprise-agentic-ai-security-fde
 
 # 2. Activate the isolated Python virtual environment
 source .venv/bin/activate
