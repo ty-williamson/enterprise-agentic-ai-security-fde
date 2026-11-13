@@ -31,32 +31,13 @@ Read `EMAILS` near the top of `lab.py` to see where the message comes from.
 The two functions are local tools. There is no mailbox connection or email sending.
 This first version captures tasks; it does not yet schedule or deliver reminders.
 
-## Live setup (second checkpoint)
+## Live setup
 
-Use Python 3.10 or newer. Keep this environment separate from the older ML examples:
+Follow [Runbook section 6](../../RUNBOOK.md#6-configure-the-gemini-connection)
+for dependency installation, local `.env` configuration, model discovery,
+and spending controls.
 
-```bash
-python3 -m venv .venv-mail
-source .venv-mail/bin/activate
-python -m pip install -r labs/mail_agent/requirements.txt
-read -rsp 'Gemini API key: ' GEMINI_API_KEY
-export GEMINI_API_KEY
-printf '\n'
-read -rp 'Model ID available in your Google AI Studio account: ' GEMINI_MODEL
-export GEMINI_MODEL
-python labs/mail_agent/lab.py --live
-```
-
-The key input is hidden and is not placed directly in shell history. Do not paste
-your key into chat or commit it. Live calls use your Google account and may incur
-usage charges. Missing configuration produces an error, never an offline fallback.
-Only the synthetic fixtures are sent to Gemini in this checkpoint.
-
-View saved tasks:
-
-```bash
-python labs/mail_agent/lab.py --tasks
-```
+Use the explicit `.venv-mail/bin/python` interpreter path for lab commands.
 
 ## Explore the security boundary
 

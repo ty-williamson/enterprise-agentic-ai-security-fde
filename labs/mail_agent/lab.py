@@ -104,6 +104,7 @@ def run_live(lab, client, model, emit=print):
         system_instruction=SYSTEM,
         tools=[types.Tool(function_declarations=DECLARATIONS)],
         automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+        max_output_tokens=1024,
     )
     contents = [types.Content(role="user", parts=[types.Part.from_text(
         text="Read the selected email, explain my commitments, and propose useful tasks.")])]
@@ -149,6 +150,14 @@ def main():
         print(json.dumps(EMAILS[args.sample], indent=2))
         print("The next checkpoint connects Gemini. This output is not an agent evaluation.")
         return 0
+    if args.live:
+        from dotenv import load_dotenv
+
+        load_dotenv(
+            Path(__file__).resolve().parents[2] / ".env",
+            override=False,
+            interpolate=False,
+        )
     if args.live and (not os.getenv("GEMINI_API_KEY") or not os.getenv("GEMINI_MODEL")):
         print("Live run requires GEMINI_API_KEY and GEMINI_MODEL in your environment. "
               "Choose a model available to your account; there is no simulated fallback.")

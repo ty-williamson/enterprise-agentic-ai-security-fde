@@ -182,34 +182,106 @@ These tests do not make live Gemini requests.
 
 ## 6. Configure the Gemini connection
 
-Create or view a key in [Google AI Studio](https://aistudio.google.com/apikey).
+The lab loads configuration from the repository-root `.env` file for live runs.
 
-Check account access, quota, and billing before live use. Do not assume requests
-are free. Choose a model available to your account that supports `generateContent`
-function calling.
+The lab requirements file, `labs/mail_agent/requirements.txt`, must contain:
 
-In the Ubuntu terminal:
-
-```bash
-read -rsp 'Gemini API key: ' GEMINI_API_KEY
-export GEMINI_API_KEY
-printf '\n'
-read -rp 'Gemini model ID: ' GEMINI_MODEL
-export GEMINI_MODEL
+```text
+google-genai==3.3.0
+python-dotenv>=1.0,<2
 ```
 
-| Command | Purpose and expected behavior |
+Install these dependencies:
+
+```bash
+.venv-mail/bin/python -m pip install -r labs/mail_agent/requirements.txt
+```
+
+This uses the lab’s Python environment. The root `requirements.txt` belongs to
+the earlier ML examples and is a separate file.
+
+### Local configuration
+
+Create or view a key in [Google AI Studio](https://aistudio.google.com/apikey).
+Create `.env` beside the root `README.md` with:
+
+```dotenv
+GEMINI_API_KEY=your_private_key
+GEMINI_MODEL=gemini-3.5-flash-lite
+```
+
+Replace the key placeholder locally. Never commit or share this file.
+
+Check that Git ignores it:
+
+```bash
+git check-ignore -v .env
+git ls-files -- .env
+```
+
+The first command should display the ignore rule. The second should produce
+no output, confirming that Git is not tracking the file.
+
+Check that the file contains a key without displaying it:
+
+```bash
+.venv-mail/bin/python -c "from dotenv import dotenv_values; print('API key present:', bool(dotenv_values('.env').get('GEMINI_API_KEY')))"
+```
+
+Expected output:
+
+```text
+API key present: True
+```
+
+### Discover model IDs
+
+From the repository root:
+
+```bash
+.venv-mail/bin/python - <<'PY'
+import os
+from dotenv import load_dotenv
+from google import genai
+
+load_dotenv(".env", override=False, interpolate=False)
+
+with genai.Client(api_key=os.environ["GEMINI_API_KEY"]) as client:
+    for model in client.models.list():
+        if "generateContent" in (model.supported_actions or []):
+            print(model.name)
+PY
+```
+
+| Part | Purpose |
 | --- | --- |
-| `read -rsp ... GEMINI_API_KEY` | Prompts for the key. `-r` preserves backslashes, `-s` hides input, and `-p` displays the prompt. Paste the key and press Enter. |
-| `export GEMINI_API_KEY` | Makes the key available to Python processes launched from this shell. Prints nothing. |
-| `printf '\n'` | Prints a newline after the hidden-input prompt. |
-| `read -rp ... GEMINI_MODEL` | Prompts for the model ID. This input is visible. |
-| `export GEMINI_MODEL` | Makes the model ID available to the application. Prints nothing. |
+| `python - <<'PY'` | Runs the enclosed Python code. The final `PY` ends the input. |
+| `load_dotenv(...)` | Loads `.env`, preserves existing environment variables, and disables variable interpolation. |
+| `genai.Client(...)` | Authenticates using the configured key. |
+| `client.models.list()` | Requests Google’s model catalog. |
+| `supported_actions` filter | Prints models supporting content generation. Tool-calling support and usable quota still need checking. |
 
-Do not paste the key into chat, source files, or Git commands.
+Expected output is a list of model IDs. This authenticates a catalog request;
+it does not run the email agent or print the key.
 
-These variables exist only in the current shell session. Set them again when
-opening a new terminal for live use.
+### Model and spending controls
+
+The initial model is `gemini-3.5-flash-lite`. Confirm availability and current
+pricing when setting up the project.
+
+The application configuration limits each model call to 1,024 output tokens.
+The tool loop permits at most six model calls per run. Multiple calls resend
+conversation context and therefore consume additional input tokens.
+
+These limits do not enforce a dollar budget. Review billing settings before
+live requests. For prepaid testing, disable automatic reload if you do not want
+automatic purchases. Billing enforcement can be delayed.
+
+Run one manual test first, inspect its output and account usage, and then decide
+whether to continue. No model is guaranteed to complete every task correctly.
+
+Existing terminal environment variables take precedence over `.env`. Terminal
+`export` commands are unnecessary when configuration is supplied through `.env`.
 
 ## 7. Run the live workflow
 
@@ -447,11 +519,16 @@ Verified on Ty’s Windows/WSL setup through VS Code’s Ubuntu terminal:
 - `google-genai==3.3.0` installed successfully.
 - All six local tests passed with no skips.
 - The reported local test run completed in 0.059 seconds.
+- Live Gemini authentication and the initial `read_email` tool call succeeded.
+- The following API request returned `ClientError`; the complete workflow
+  remains under investigation.
 
 The live Gemini connection and actual model behavior remain unverified.
 
 Earlier ML examples and generated reports are outside this setup path. Update
 this runbook as new capabilities are implemented and tested.
+
+
 
 ## References
 
