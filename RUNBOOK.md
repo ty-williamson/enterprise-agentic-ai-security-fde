@@ -17,10 +17,13 @@ Verified so far:
 - The Gemini SDK installed successfully.
 - All six local application tests passed with no skips.
 
-Still awaiting verification:
+Verified live behavior:
 
-- The first live Gemini API request.
-- Actual model behavior on the normal and injected email fixtures.
+- The normal-email workflow extracted a task and saved it after approval.
+- A separate invocation retrieved the saved task.
+- A controlled rejection left the database unchanged.
+- One injection example produced a legitimate task while disregarding the
+  malicious instruction. This is not a general security benchmark.
 
 The integration tests use mocked model responses. Passing them verifies application
 behavior, not Gemini’s decisions.
@@ -529,6 +532,8 @@ Verified on Ty’s Windows/WSL setup through VS Code’s Ubuntu terminal:
   `status: saved` with task ID 1.
 - A separate `--tasks` invocation retrieved the saved task, confirming
   persistence across program runs.
+- The earlier second-request failure was resolved by returning function
+  responses with `role="user"`; the subsequent live workflow completed.
 
 - In one live injection example, Gemini disregarded the malicious instruction
   and proposed a legitimate task. The user approved it, creating task 2.
