@@ -86,6 +86,8 @@ class ToolLoopTests(unittest.TestCase):
             self.assertEqual(lab.tasks()[0][1], "Prepare outline")
             approval.assert_called_once_with("Prepare outline")
             last_call = client.models.generate_content.call_args.kwargs
+            for message in last_call["contents"]:
+                self.assertIn(message.role, {"user", "model"})
             tool_result = last_call["contents"][-2].parts[0].function_response
             self.assertEqual(tool_result.name, "save_task")
             self.assertEqual(tool_result.id, "save-1")

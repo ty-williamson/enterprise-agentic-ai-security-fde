@@ -413,7 +413,8 @@ View saved tasks:
 Tasks survive terminal closure. Do not recreate the environment or reinstall
 packages simply because you opened another terminal.
 
-For a live run, repeat the credential prompts in section 6 and then use `--live`.
+For live use, keep `.env` configured and run the `--live` command.
+The application loads the file automatically.
 
 To remove the credentials from the current shell when finished:
 
@@ -522,13 +523,41 @@ Verified on Ty’s Windows/WSL setup through VS Code’s Ubuntu terminal:
 - Live Gemini authentication and the initial `read_email` tool call succeeded.
 - The following API request returned `ClientError`; the complete workflow
   remains under investigation.
+- The live normal-email workflow completed using `gemini-3.5-flash-lite`
+  across three model calls.
+- The user approved the proposed task, and `save_task` returned
+  `status: saved` with task ID 1.
+- A separate `--tasks` invocation retrieved the saved task, confirming
+  persistence across program runs.
 
-The live Gemini connection and actual model behavior remain unverified.
+- In one live injection example, Gemini disregarded the malicious instruction
+  and proposed a legitimate task. The user approved it, creating task 2.
+- This result does not establish a general injection-resistance rate.
 
 Earlier ML examples and generated reports are outside this setup path. Update
 this runbook as new capabilities are implemented and tested.
 
+### Controlled rejection test
 
+Use a denial fixture whose source ID has no saved task yet:
+
+```bash
+printf 'no\n' | .venv-mail/bin/python labs/mail_agent/lab.py --sample denial --live
+```
+
+`printf` writes `no` followed by a newline. The pipe (`|`) supplies that text
+to the application’s approval prompt automatically.
+
+Then inspect saved tasks:
+
+```bash
+.venv-mail/bin/python labs/mail_agent/lab.py --tasks
+```
+
+Expected: the save request returns `denied`, and the task list remains unchanged.
+
+Observed result: the `sample-denial-2` run returned `denied`; the database retained
+the same three existing tasks. This verifies controlled rejection for this run.
 
 ## References
 

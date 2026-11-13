@@ -31,13 +31,15 @@ error. No model execution or security result is simulated as a substitute.
   reminder service in this checkpoint.
 - This version uses the GenAI SDK directly. It does not claim ADK orchestration,
   multiple agents, enterprise RAG, or a measured attack-success rate.
-- Planned later work: task completion, due dates, Telegram delivery, Outlook
-  ingestion, and source retrieval when the working use case needs it.
 - Live configuration loads from a local, Git-ignored `.env` file.
 - The initial model is `gemini-3.5-flash-lite`.
 - Each model call is limited to 1,024 output tokens, with at most six
   model calls per run. These are usage limits, not a dollar spending cap.
 - See the [Runbook](RUNBOOK.md) for configuration and billing guidance.
+- Verified on synthetic fixtures: live task extraction, approved saving,
+  persistence across runs, and controlled rejection without a database change.
+- One injection example produced a legitimate task while disregarding the
+  malicious instruction. Broader security evaluation remains future work.
 
 ## Earlier generated material
 
