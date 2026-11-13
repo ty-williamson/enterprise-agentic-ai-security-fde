@@ -227,3 +227,5 @@ data/
 __pycache__/
 data/
 traces.json
+.venv-lab/
+.venv-mail/

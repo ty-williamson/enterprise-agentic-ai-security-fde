@@ -1,3 +1,5 @@
+> **Historical generated draft:** The experiments, implementation outcomes, and measurements described below were not completed or verified by the author. This file is retained for review and must not be used as evidence of personal accomplishments. Start with [the current README](../README.md).
+
 # Security Audit Report: Trust-Boundary & Indirect Prompt Injection Evaluation of a Live Tool-Calling Mail Agent
 **Program:** 2026 NSF AI-EDGE Summer Research Program — The Ohio State University  
 **Module:** AI + Security Field Lab ("Prompt-Inject the Real Mail Agent")  

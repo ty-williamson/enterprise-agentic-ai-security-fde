@@ -1,3 +1,5 @@
+> **Historical generated draft:** The experiments, implementation outcomes, and measurements described below were not completed or verified by the author. This file is retained for review and must not be used as evidence of personal accomplishments. Start with [the current README](../README.md).
+
 # Architecting Secure Enterprise Agentic Workflows: Mitigating Trust-Boundary Failures, Adversarial Transferability, and Data Leakage in Production LLM & RAG Pipelines
 **Author:** Ty Williamson  
 **Program:** 2026 National Science Foundation (NSF) AI Institute for Future Edge Networks and Distributed Intelligence (AI-EDGE) — The Ohio State University  
